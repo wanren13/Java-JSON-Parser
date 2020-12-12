@@ -1,11 +1,11 @@
 package JSON;
 
 public enum JSONType {
-    BOOL,
-    INT,
-    FLOAT,
+    BOOLEAN,
+    INTEGER,
+    REAL,
     STRING,
-    MAP,
+    OBJECT,
     ARRAY,
     NULL
 }

@@ -25,17 +25,16 @@ public class JSONObjectParser extends JSONParser {
             if (token.getType() != STRING) {
                 token.setUnexpected();
                 jsonErrorHandler.flag(token, EnumSet.of(STRING));
-                // todo
-                break;
+                // stop parsing if there is an error
+                return null;
             }
             String key = token.getText();
             token = nextToken(); // consume STRING
             if (token.getType() != COLON) {
                 token.setUnexpected();
                 jsonErrorHandler.flag(token, EnumSet.of(COLON));
-//                return null;
-                // todo
-                break;
+                // stop parsing if there is an error
+                return null;
             }
             nextToken(); // consume COLON
             JSONObj value = parser.parse();
@@ -47,6 +46,8 @@ public class JSONObjectParser extends JSONParser {
             if (token.getType() != COMMA && token.getType() != RIGHT_BRACE) {
                 token.setUnexpected();
                 jsonErrorHandler.flag(token, EnumSet.of(COMMA, RIGHT_BRACE));
+                // stop parsing if there is an error
+                return null;
             }
             // consume comma
             if (token.getType() == COMMA)
@@ -59,9 +60,8 @@ public class JSONObjectParser extends JSONParser {
         if (token.getType() != RIGHT_BRACE) {
             token.setUnexpected();
             jsonErrorHandler.flag(token, EnumSet.of(RIGHT_BRACE));
+            // stop parsing if there is an error
             return null;
-            // todo
-//            return null;
         }
 
         // unexpected EOF

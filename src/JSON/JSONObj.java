@@ -16,8 +16,6 @@ public class JSONObj {
 
     private JSONType type;
 
-    private String indentation = "  ";
-
     public JSONObj() {
         type = NULL;
         value_o = null;
@@ -28,7 +26,7 @@ public class JSONObj {
     }
 
     public JSONObj(Boolean value_b) {
-        type = BOOL;
+        type = BOOLEAN;
         this.value_b = value_b;
     }
 
@@ -37,7 +35,7 @@ public class JSONObj {
     }
 
     public JSONObj(Integer value_i) {
-        type = INT;
+        type = INTEGER;
         this.value_i = value_i;
     }
 
@@ -46,12 +44,12 @@ public class JSONObj {
     }
 
     public JSONObj(Double value_d) {
-        type = FLOAT;
+        type = REAL;
         this.value_d = value_d;
     }
 
     public JSONObj(LinkedHashMap<String, JSONObj> value_m) {
-        type = MAP;
+        type = OBJECT;
         this.value_m = value_m;
     }
 
@@ -66,7 +64,6 @@ public class JSONObj {
     }
 
     // Setters
-
     private void reset() {
         value_b = null;
         value_i = null;
@@ -88,7 +85,7 @@ public class JSONObj {
 
     public void resetValue(Boolean value_b) {
         reset();
-        type = BOOL;
+        type = BOOLEAN;
         this.value_b = value_b;
     }
 
@@ -98,7 +95,7 @@ public class JSONObj {
 
     public void resetValue(Integer value_i) {
         reset();
-        type = INT;
+        type = INTEGER;
         this.value_i = value_i;
     }
 
@@ -108,7 +105,7 @@ public class JSONObj {
 
     public void resetValue(Double value_d) {
         reset();
-        type = FLOAT;
+        type = REAL;
         this.value_d = value_d;
     }
 
@@ -126,7 +123,7 @@ public class JSONObj {
 
     public void resetValue(LinkedHashMap<String, JSONObj> value_m) {
         reset();
-        type = MAP;
+        type = OBJECT;
         this.value_m = value_m;
     }
 
@@ -139,13 +136,13 @@ public class JSONObj {
     public Object getValue() {
         Object obj;
         switch (type) {
-            case BOOL:
+            case BOOLEAN:
                 obj = value_b;
                 break;
-            case INT:
+            case INTEGER:
                 obj = value_i;
                 break;
-            case FLOAT:
+            case REAL:
                 obj = value_d;
                 break;
             case STRING:
@@ -154,7 +151,7 @@ public class JSONObj {
             case ARRAY:
                 obj = value_a;
                 break;
-            case MAP:
+            case OBJECT:
                 obj = value_m;
                 break;
             case NULL:
@@ -192,33 +189,36 @@ public class JSONObj {
 
     public String toString() {
         String str;
-        if (type == INT)
+        if (type == INTEGER)
             str = Integer.toString(value_i);
-        else if (type == FLOAT)
+        else if (type == REAL)
             str = Double.toString(value_d);
-        else if (type == BOOL)
+        else if (type == BOOLEAN)
             str = Boolean.toString(value_b);
         else if (type == STRING)
             str = "\"" + value_s + "\"";
         else if (type == NULL)
             str = "null";
         else if (type == ARRAY) {
-            StringBuilder strb = new StringBuilder("[");
+            StringBuilder stringBuilder = new StringBuilder("[");
             for (JSONObj obj : value_a)
-                strb.append(obj + ",");
-            if (strb.charAt(strb.length() - 1) == ',')
-                strb.deleteCharAt(strb.length() - 1);
-            strb.append("]");
-            str = strb.toString();
-        } else if (type == MAP) {
-            StringBuilder strb = new StringBuilder("{");
+                stringBuilder.append(obj).append(",");
+            if (stringBuilder.charAt(stringBuilder.length() - 1) == ',')
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            stringBuilder.append("]");
+            str = stringBuilder.toString();
+        } else if (type == OBJECT) {
+            StringBuilder stringBuilder = new StringBuilder("{");
             for (String key : value_m.keySet()) {
-                strb.append(key + ":" + value_m.get(key) + ",");
+                stringBuilder.append(key)
+                             .append(":")
+                             .append(value_m.get(key))
+                             .append(",");
             }
-            if (strb.charAt(strb.length() - 1) == ',')
-                strb.deleteCharAt(strb.length() - 1);
-            strb.append("}");
-            str = strb.toString();
+            if (stringBuilder.charAt(stringBuilder.length() - 1) == ',')
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            stringBuilder.append("}");
+            str = stringBuilder.toString();
         } else
             str = "Unknown type";
         return str;

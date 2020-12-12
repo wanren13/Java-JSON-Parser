@@ -7,26 +7,30 @@ import JSON.parser.tokens.JSONTokenType;
 import java.util.EnumSet;
 
 public class JSONErrorHandler {
+    private int errorCount = 0;
     public void flag(JSONToken token) {
-        StringBuilder flagBuffer = errorHead(token);
+        // only show the first error
+        if (errorCount == 0) {
+            errorCount++;
+            StringBuilder flagBuffer = errorHead(token);
+            System.out.println(flagBuffer.toString());
+        }
     }
 
     public void flag(JSONToken token, EnumSet<JSONTokenType> expectedSet) {
-//        [1, {	2: sf,	"3": 3}, 3]
-//        ------^
-//                Expecting 'STRING', '}', got 'NUMBER'
-        StringBuilder flagBuffer = errorHead(token);
+        // only show the first error
+        if (errorCount == 0) {
+            errorCount++;
+            StringBuilder flagBuffer = errorHead(token);
+            flagBuffer.append("Expecting ");
 
-        flagBuffer.append("Expecting ");
+            for (JSONTokenType tokenType : expectedSet) {
+                flagBuffer.append("'").append(tokenType).append("', ");
+            }
 
-        for (JSONTokenType tokenType : expectedSet) {
-            flagBuffer.append("'" + tokenType + "', ");
+            flagBuffer.append("got '").append(token.getType()).append("'.");
+            System.out.println(flagBuffer.toString());
         }
-        flagBuffer.append("got " + "'" + token.getType() + "'.");
-
-        System.out.println(flagBuffer.toString());
-
-//        System.exit(0);
     }
 
     private StringBuilder errorHead(JSONToken token) {
@@ -40,15 +44,11 @@ public class JSONErrorHandler {
         // print empty string instead of "null"
         System.out.println(line == null?"":line);
 
-        int spaceCount = position;
-
         // Spaces up to the error position.
-        for (int i = 0; i < spaceCount; ++i) {
-            flagBuffer.append(' ');
-        }
+        flagBuffer.append(" ".repeat(position));
 
         // A pointer to the error followed by the error message.
-        flagBuffer.append("^\n*** " + status.getText() + ". ");
+        flagBuffer.append("^\n*** ").append(status.getText()).append(". ");
         return flagBuffer;
     }
 }

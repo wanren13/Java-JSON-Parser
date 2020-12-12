@@ -10,8 +10,6 @@ public class JSONUndefinedToken extends JSONToken {
         super(source);
         type = UNDEFINED;
         status = UNEXPECTED_TOKEN;
-        text = currentWord();
-        consumeCurrentWord();
     }
 
     public JSONUndefinedToken(JSONToken token) throws Exception {
@@ -23,5 +21,9 @@ public class JSONUndefinedToken extends JSONToken {
     }
 
     // override only, do nothing
-    protected void extract() {}
+    protected void extract() throws Exception{
+        text = currentWord();
+        consumeCurrentWord();
+        value = null;
+    }
 }

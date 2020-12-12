@@ -30,6 +30,8 @@ public class JSONArrayParser extends JSONParser{
             if (token.getType() != COMMA && token.getType() != RIGHT_BRACKET) {
                 token.setUnexpected();
                 jsonErrorHandler.flag(token, EnumSet.of(COMMA, RIGHT_BRACKET));
+                // stop parsing if there is an error
+                return null;
             }
             // consume comma
             if (token.getType() == COMMA)
@@ -42,9 +44,8 @@ public class JSONArrayParser extends JSONParser{
         if (token.getType() != RIGHT_BRACKET) {
             token.setUnexpected();
             jsonErrorHandler.flag(token, EnumSet.of(RIGHT_BRACKET));
+            // stop parsing if there is an error
             return null;
-            // todo
-//            return null;
         }
 
         return new JSONObj(arr);

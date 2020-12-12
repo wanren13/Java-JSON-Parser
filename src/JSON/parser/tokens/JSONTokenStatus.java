@@ -6,9 +6,9 @@ import java.util.EnumSet;
 public enum JSONTokenStatus {
     // Error Code
     GOOD_TOKEN("Good token"),
-//    INVALID_CHARACTER("Invalid character"),
     UNEXPECTED_TOKEN("Unexpected token"),
     UNEXPECTED_EOF("Unexpected end of file"),
+    MISSING_QUOTE("Missing quotation mark"),
     RANGE_INTEGER("Integer literal out of range"),
     RANGE_REAL("Real literal out of range");
 
@@ -16,10 +16,6 @@ public enum JSONTokenStatus {
     private static final int LAST_ERROR_INDEX  = RANGE_REAL.ordinal();
 
     private final String text;  // token text
-
-    JSONTokenStatus() {
-        text = this.toString().toLowerCase();
-    }
 
     JSONTokenStatus(String text) {
         this.text = text;

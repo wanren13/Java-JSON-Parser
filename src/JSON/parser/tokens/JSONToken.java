@@ -5,6 +5,7 @@ import JSON.parser.Source;
 
 import static JSON.parser.tokens.JSONTokenStatus.GOOD_TOKEN;
 import static JSON.parser.tokens.JSONTokenStatus.UNEXPECTED_TOKEN;
+import static JSON.parser.tokens.JSONTokenType.UNDEFINED;
 
 public class JSONToken
 {
@@ -18,6 +19,7 @@ public class JSONToken
     protected int position;    // position of the first token character
 
     public JSONToken(Source source) throws Exception {
+        type = UNDEFINED;
         status = GOOD_TOKEN;
         value = null;
         this.source = source;
@@ -86,11 +88,11 @@ public class JSONToken
         return source.nextChar();
     }
 
-    protected String currentWord() throws Exception {
+    protected String currentWord() {
         return source.currentWord();
     }
 
-    protected void consumeCurrentWord() throws Exception {
+    protected void consumeCurrentWord() {
         source.consumeCurrentWord();
     }
 

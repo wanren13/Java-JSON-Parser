@@ -44,7 +44,7 @@ public class JSONParser
 	}
 
 	public JSONObj parse() throws Exception {
-		JSONObj obj = null;
+		JSONObj obj;
 
 		try {
 			JSONToken token = currentToken();
@@ -54,6 +54,8 @@ public class JSONParser
 				}
 				else {
 					jsonErrorHandler.flag(token);
+					// stop parsing if there is an error
+					return null;
 				}
 			}
 			else if (token.getType() == LEFT_BRACKET) {
@@ -69,11 +71,14 @@ public class JSONParser
 			else {
 				// undefined token
 				jsonErrorHandler.flag(token, TOKEN_START_SET);
+				// stop parsing if there is an error
+				return null;
 			}
 		}
 		catch (java.io.IOException ex) {
 			// todo
-			System.exit(0);
+			ex.printStackTrace();
+			return null;
 		}
 		return obj;
 	}

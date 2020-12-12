@@ -7,7 +7,6 @@ import static JSON.parser.tokens.JSONTokenStatus.UNEXPECTED_TOKEN;
 import static JSON.parser.tokens.JSONTokenType.SPECIAL_SYMBOLS;
 
 public class JSONScanner {
-
     private final Source source;     // source
     private JSONToken currentToken;  // current token
 
@@ -75,7 +74,6 @@ public class JSONScanner {
                     token = new JSONUndefinedToken(source);
             }
         }
-
         return token;
     }
 

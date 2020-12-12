@@ -6,10 +6,10 @@ import java.util.Hashtable;
 public enum JSONTokenType {
     // Special symbols.
     //additive operators
-    PLUS("+"), MINUS("-"), DOT("."),
+//    PLUS("+"), MINUS("-"), DOT("."),
 
     //other
-    SLASH("/"), QUOTE("\""),
+//    SLASH("/"), QUOTE("\""),
 
     COMMA(","), COLON(":"),
     //parens

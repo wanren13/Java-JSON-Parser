@@ -4,7 +4,7 @@ import JSON.JSONObj;
 import JSON.parser.Source;
 
 import static JSON.parser.Source.EOF;
-import static JSON.parser.tokens.JSONTokenStatus.UNEXPECTED_EOF;
+import static JSON.parser.tokens.JSONTokenStatus.MISSING_QUOTE;
 import static JSON.parser.tokens.JSONTokenType.STRING;
 
 public class JSONStringToken extends JSONToken {
@@ -49,7 +49,7 @@ public class JSONStringToken extends JSONToken {
             value = new JSONObj(valueBuffer.toString());
         }
         //string ended at EOF
-        else status = UNEXPECTED_EOF;
+        else status = MISSING_QUOTE;
 
         text = textBuffer.toString();
     }
